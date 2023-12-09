@@ -1,7 +1,7 @@
 import streamlit as st
-import docx 
+# import docx 
 st.title("running")
-from docx import Document
+# from docx import Document
 from io import BytesIO
 from reportlab.pdfgen import canvas
 
