@@ -1,6 +1,15 @@
 import streamlit as st
 from datetime import datetime, timedelta
 
+import streamlit as st
+
+st.title("hellow")
+st.write("Hellow")
+st.success("success")
+st.info("info")
+st.error("error")
+
+
 def date_difference(date1, date2):
     # Convert string dates to datetime objects
     date1 = datetime.strptime(date1, "%Y-%m-%d")
@@ -10,6 +19,7 @@ def date_difference(date1, date2):
     difference = abs((date2 - date1).days)
 
     return difference
+
 
 def main():
     st.title("Date Difference Calculator")
@@ -27,5 +37,7 @@ def main():
         difference = date_difference(str(start_date), str(end_date))
         st.write(f"Difference in days: {difference} days")
 
+
 if __name__ == "__main__":
     main()
+
