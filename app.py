@@ -1,45 +1,31 @@
 import streamlit as st
-# import docx 
-st.title("running")
-# from docx import Document
-from io import BytesIO
-from reportlab.pdfgen import canvas
+from datetime import datetime, timedelta
 
-def convert_doc_to_pdf(doc_file):
-    try:
-        doc = Document(doc_file)
-        
-        pdf_bytes = BytesIO()
-        pdf_canvas = canvas.Canvas(pdf_bytes)
+def date_difference(date1, date2):
+    # Convert string dates to datetime objects
+    date1 = datetime.strptime(date1, "%Y-%m-%d")
+    date2 = datetime.strptime(date2, "%Y-%m-%d")
 
-        for para in doc.paragraphs:
-            pdf_canvas.drawString(72, 800, para.text)  # Adjust the coordinates as needed
+    # Calculate the difference in days
+    difference = abs((date2 - date1).days)
 
-        pdf_canvas.save()
-
-        st.success("Conversion successful!")
-        return pdf_bytes.getvalue()
-
-    except Exception as e:
-        st.error(f"Conversion failed: {e}")
-        return None
+    return difference
 
 def main():
-    st.title("DOCX to PDF Converter")
+    st.title("Date Difference Calculator")
 
-    uploaded_file = st.file_uploader("Upload a DOCX file", type=["docx"])
+    # Get user input for two dates using the calendar
+    start_date = st.date_input("Select the start date")
+    end_date = st.date_input("Select the end date")
 
-    if uploaded_file is not None:
-        st.write("File uploaded successfully!")
-        st.write("Converting...")
+    # Display the selected dates
+    st.write(f"Start Date: {start_date}")
+    st.write(f"End Date: {end_date}")
 
-        pdf_content = convert_doc_to_pdf(uploaded_file)
-
-        if pdf_content:
-            st.markdown(
-                f"**[Download PDF](data:application/pdf;base64,{pdf_content.decode('utf-8')})**",
-                unsafe_allow_html=True,
-            )
+    # Calculate and display the difference in days
+    if start_date and end_date:
+        difference = date_difference(str(start_date), str(end_date))
+        st.write(f"Difference in days: {difference} days")
 
 if __name__ == "__main__":
     main()
